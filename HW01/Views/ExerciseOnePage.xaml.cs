@@ -29,7 +29,7 @@ namespace HW01.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock.Text = "谢羿衡 2023302061163";
+            TextBlock.Text = "你好！我是谢羿衡";
             (sender as Button).IsEnabled = false;
         }
     }

@@ -33,8 +33,9 @@
                     BorderBrush="White" BorderThickness="1"
                     CornerRadius="8">
                 <ScrollViewer Margin="5"
-                              VerticalScrollBarVisibility="Visible">
-                    <TextBlock x:Name="text" TextWrapping="WrapWholeWords"/>
+                              VerticalScrollBarVisibility="Visible"
+                              HorizontalScrollBarVisibility="Visible">
+                    <TextBlock x:Name="textBlock" TextWrapping="NoWrap"/>
                 </ScrollViewer>
             </Border>
         </Grid>

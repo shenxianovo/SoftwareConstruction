@@ -36,20 +36,33 @@ namespace HW01.Views
             {
                 int a = Int32.Parse(boxA.Text);
                 int b = Int32.Parse(boxB.Text);
-                int c = a;
+
+                List<int> primes;
 
                 if (a > b)
                 {
-                    text.Text = PrimeNumber.CalculateBetween(b, a);
+                    primes = PrimeNumber.CalculateBetween(b, a);
                 }
                 else
                 {
-                    text.Text = PrimeNumber.CalculateBetween(a, b);
+                    primes = PrimeNumber.CalculateBetween(a, b);
                 }
+
+                StringBuilder text = new StringBuilder();
+                for (int i = 0; i < primes.Count; i++)
+                {
+                    if (i > 0 && i % 10 == 0)
+                    {
+                        text.AppendLine();
+                    }
+                    text.Append(primes[i] + " ");
+                }
+
+                textBlock.Text = text.ToString();
             }
             catch (FormatException)
             {
-                MessageDialog dialog = new MessageDialog("Invalid Parameter!");
+                MessageDialog dialog = new MessageDialog("Invalid Parameter!\nPleace enter a non-negative integer");
                 await dialog.ShowAsync();
             }
         }
@@ -59,23 +72,20 @@ namespace HW01.Views
     {
         private static bool IsPrime(int n)
         {
-            if (n <= 1)
+            if (n < 0)
             {
                 throw new FormatException();
             }
+            if (n == 2)
+                return true;
 
             // Some optimization
-            if (n == 2 || n == 3 || n == 5 || n == 7 || n == 11 || n == 13)
-            {
-                return true;
-            }
-
-            if (n % 2 == 0)
+            if (n % 2 == 0 || n == 1)
             {
                 return false;
             }
 
-            for (int i = 3; i < n; i++)
+            for (int i = 3; i < n; i+=2)
             {
                 if (n % i == 0)
                 {
@@ -87,19 +97,19 @@ namespace HW01.Views
         }
 
         // [a, b)
-        public static string CalculateBetween(int a, int b)
+        public static List<int> CalculateBetween(int a, int b)
         {
-            StringBuilder retVal = new StringBuilder();
+            List<int> retVal = new List<int>();
 
             for (int i = a; i < b; i++)
             {
                 if (IsPrime(i))
                 {
-                    retVal.AppendLine(i.ToString());
+                    retVal.Add(i);
                 }
             }
 
-            return retVal.ToString();
+            return retVal;
         }
     }
 }
