@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="HW01.Views.ExerciseOnePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HW01.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <TextBlock Text="ExerciseOne"/>
+
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock x:Name="TextBlock" Grid.Row="0" Text="awa" HorizontalAlignment="Center"/>
+            <Button Grid.Row="1" Content="Click Me!"
+                    Click="Button_Click"
+                    HorizontalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Page>
