@@ -1,0 +1,2 @@
+MainPackage=D:\WorkingSpace\SoftwareConstruction\HW01\bin\x86\Debug\HW01_1.0.0.0_x86_Debug.msix
+SymbolPackage=D:\WorkingSpace\SoftwareConstruction\HW01\obj\x86\Debug\Symbols\HW01_1.0.0.0_x86_Debug.appxsym

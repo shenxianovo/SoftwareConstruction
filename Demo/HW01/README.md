@@ -7,6 +7,14 @@
 
 ## 运行效果
 
+如需本地安装，请下载源码。
+
+下载后
+1. 进入 `HW01/AppPackages` 目录。
+2. 双击安全证书文件进行证书安装.
+3. 运行 `MSIXBUNDLE` 文件
+
+
 ### 第一题
 
 ![alt text](devenv_CRtHoF2QYh.gif)
