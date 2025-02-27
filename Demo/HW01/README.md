@@ -12,7 +12,7 @@
 下载后
 1. 进入 `HW01/AppPackages` 目录。
 2. 双击安全证书文件进行证书安装.
-3. 运行 `MSIXBUNDLE` 文件
+3. 运行 `MSIXBUNDLE` 安装包
 
 
 ### 第一题
@@ -21,4 +21,4 @@
 
 ### 第二题
 
-![alt text](devenv_4twXqBfFab.gif)
+![alt text](Code_BSPIAqA3vK.gif)
