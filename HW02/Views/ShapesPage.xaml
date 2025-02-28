@@ -1,0 +1,78 @@
+<Page
+    x:Class="HW02.Views.ShapesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HW02.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:converters="using:HW02.Convertors">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <converters:RectangleToVisibilityConverter x:Key="RectangleConvertor"/>
+            <converters:EllipseToVisibilityConverter x:Key="EllipseConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Shapes}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="5"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Center" Margin="10">
+                            <!-- 使用 Canvas 来绘制图形 -->
+                            <Viewbox Width="200" Height="200">
+                            <Canvas Width="200" Height="200">
+                                <!-- 绘制 Rectangle -->
+                                <Rectangle Width="{Binding VisualWidth}" Height="{Binding VisualHeight}" 
+                                           Fill="#4cc2ff" Stroke="Black" Canvas.Left="10" Canvas.Top="10"
+                                           Visibility="{Binding ShapeType, Converter={StaticResource ResourceKey=RectangleConvertor}}"/>
+                                <!-- 绘制 Ellipse -->
+                                <Ellipse Width="{Binding VisualWidth}" Height="{Binding VisualHeight}" 
+                                         Fill="#77dd77" Stroke="Black" Canvas.Left="10" Canvas.Top="10"
+                                         Visibility="{Binding ShapeType, Converter={StaticResource ResourceKey=EllipseConverter}}"/>
+                            </Canvas>
+                            </Viewbox>
+
+                            <!-- 显示形状类型和面积 -->
+                            <TextBlock Text="{Binding ShapeType}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock  HorizontalAlignment="Center">
+                                <Run Text="Area:"/>
+                                <Run Text="{Binding Area}"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Border Grid.Row="1" BorderThickness="0.5" HorizontalAlignment="Stretch" BorderBrush="#FFFFFF" Margin="10, 0"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    HorizontalAlignment="Center" Margin="0, 15">
+            <Button Content="抽 1 次" Command="{Binding CreateRandomShapeCommand}"
+                    Margin="0, 0, 50, 0"/>
+            <Button Content="抽 10 次" Command="{Binding CreateRamdomShapesCommand}"
+                    Margin="0, 0, 50, 0"/>
+            <TextBlock VerticalAlignment="Center">
+                <Run Text="Total area:"/>
+                <Run Text="{Binding AreaSum}"/>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>
