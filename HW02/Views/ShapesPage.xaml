@@ -35,18 +35,19 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Center" Margin="10">
-                            <!-- 使用 Canvas 来绘制图形 -->
+                            <!-- 绘图 -->
                             <Viewbox Width="200" Height="200">
-                            <Canvas Width="200" Height="200">
-                                <!-- 绘制 Rectangle -->
-                                <Rectangle Width="{Binding VisualWidth}" Height="{Binding VisualHeight}" 
-                                           Fill="#4cc2ff" Stroke="Black" Canvas.Left="10" Canvas.Top="10"
-                                           Visibility="{Binding ShapeType, Converter={StaticResource ResourceKey=RectangleConvertor}}"/>
-                                <!-- 绘制 Ellipse -->
-                                <Ellipse Width="{Binding VisualWidth}" Height="{Binding VisualHeight}" 
-                                         Fill="#77dd77" Stroke="Black" Canvas.Left="10" Canvas.Top="10"
-                                         Visibility="{Binding ShapeType, Converter={StaticResource ResourceKey=EllipseConverter}}"/>
-                            </Canvas>
+                                <Canvas Width="200" Height="200">
+                                    <!-- Rectangle -->
+                                    <Rectangle Width="{Binding VisualWidth}" Height="{Binding VisualHeight}" 
+                                               Fill="#4cc2ff" Stroke="Black" Canvas.Left="{Binding CanvasLeft}" Canvas.Top="{Binding CanvasTop}"
+                                               Visibility="{Binding ShapeType, Converter={StaticResource ResourceKey=RectangleConvertor}}"/>
+                                    <!-- Ellipse -->
+                                    <Ellipse Width="{Binding VisualWidth}" Height="{Binding VisualHeight}" 
+                                             Fill="#77dd77" Stroke="Black" Canvas.Left="{Binding CanvasLeft}" Canvas.Top="{Binding CanvasTop}"
+                                             Visibility="{Binding ShapeType, Converter={StaticResource ResourceKey=EllipseConverter}}"
+                                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Canvas>
                             </Viewbox>
 
                             <!-- 显示形状类型和面积 -->
@@ -69,7 +70,9 @@
                     Margin="0, 0, 50, 0"/>
             <Button Content="抽 10 次" Command="{Binding CreateRamdomShapesCommand}"
                     Margin="0, 0, 50, 0"/>
-            <TextBlock VerticalAlignment="Center">
+            <Button Content="清空" Command="{Binding ClearShapesCommand}"
+                    Margin="0, 0, 50, 0"/>
+            <TextBlock VerticalAlignment="Center" Width="200">
                 <Run Text="Total area:"/>
                 <Run Text="{Binding AreaSum}"/>
             </TextBlock>

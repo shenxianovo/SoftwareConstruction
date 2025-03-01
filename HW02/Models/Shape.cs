@@ -22,6 +22,9 @@ namespace HW02.Models
         public double VisualWidth => Width * 10;
         public double VisualHeight => Height * 10;
 
+        public double CanvasTop => (200 - VisualHeight) / 2;
+        public double CanvasLeft => (200 - VisualWidth) / 2;
+
         public string ShapeType => GetType().Name;
         public double Area => CalcArea();
 

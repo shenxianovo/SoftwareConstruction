@@ -10,6 +10,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Text="Settings"/>
+        <TextBlock Text="尝试了一下 MVVM。不太熟练，结果是收获了一坨屎山。"/>
     </Grid>
 </Page>

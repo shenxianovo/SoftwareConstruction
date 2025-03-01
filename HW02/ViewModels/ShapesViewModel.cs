@@ -28,7 +28,7 @@ namespace HW02.ViewModels
         {
             Shape shape = ShapeFactory.CreateRandomShape();
 
-            if (Shapes.Count < 10)
+            if (Shapes!.Count < 10)
             {
                 Shapes.Add(shape);
                 AreaSum += shape.Area;
@@ -43,15 +43,21 @@ namespace HW02.ViewModels
         }
 
         [RelayCommand]
-        private void CreateRamdomShapes()
+        private void ClearShapes()
         {
             Shapes!.Clear();
             AreaSum = 0;
+        }
+
+        [RelayCommand]
+        private void CreateRamdomShapes()
+        {
+            ClearShapes();
             for (int i = 0; i < 10; ++i)
             {
                 Shape shape = ShapeFactory.CreateRandomShape();
                 AreaSum += shape.Area;
-                Shapes.Add(shape);
+                Shapes!.Add(shape);
             }
         }
 
