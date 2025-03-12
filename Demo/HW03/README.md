@@ -17,9 +17,12 @@
 
 采用 MVVM 模型
 
-1. `Clock` 类结构：
+1. `Clock` 类：
+   - 实现了三个事件：走时，响铃与闹钟列表变化
+   - 实现时钟基本行为
    ![alt text](image.png)
-2. `ClockViewModel` 订阅事件
+2. `ClockViewModel`：
+   - 订阅事件
    ![alt text](image-1.png)
 
 
@@ -87,7 +90,7 @@ We've added a new analyzer for this to provide a better experience in the new re
 
 在项目配置中启用 `unsafe block`
 
-### 3. 弹窗 (ContentDialog) 需要指定 XmalRoot
+### 3. 弹窗 (ContentDialog) 需要指定 XamlRoot
 
 ``` cs
 private void OnAlarmRaised(object? sender, EventArgs e)
@@ -109,7 +112,15 @@ private void OnAlarmRaised(object? sender, EventArgs e)
 }
 ```
 
-根据 MVVM 规范，ViewModel 中应该没有 UI-realated-code, ViewModel 与 UI 之间通过纯绑定关联
+根据 MVVM 规范，ViewModel 不应有 UI-realated-code, ViewModel 与 UI 之间通过绑定与命令关联，
+但是 `XamlRoot` 是 UI 里面的属性，WinUI3 没有提供这一属性的绑定方式...
 
-目前解决方法是把 `App` 中 `m_Window` 成员设置为公有（屎！）
+通过`MainWindow.Current.Content.XamlRoot`运行时获取也不行，因为 MainWindow 由开发者自己创建，WinUI 不会自动存储 Current 实例，因此 Window.Current 始终为 `null`
 
+理论上应该在 UI 创建时从 CodeBehind 里面拿到 `XamlRoot`，然而我的 ViewModel 根本就没放到 CodeBehind，是直接在 UI 中进行的实例化（天哪...
+
+目前解决方法是把 `App` 中 `m_Window` 成员设置为公有，然后就有了这一长条恶心的东西（屎！）
+
+``` cs
+dialog.XamlRoot = ((Application.Current as App)?.m_window as MainWindow)?.Content.XamlRoot;
+```
