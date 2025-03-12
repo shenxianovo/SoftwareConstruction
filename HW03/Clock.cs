@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Content;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +34,7 @@ namespace HW03
                     field = value;
                     TimeChanged?.Invoke(this, EventArgs.Empty);
                 }
-                if (AlarmItems.Contains(field))
+                if (AlarmItems.Contains(new TimeOnly(field.Hour, field.Minute, field.Second)))
                 {
                     AlarmRaised?.Invoke(this, EventArgs.Empty);
                 }
@@ -45,7 +46,7 @@ namespace HW03
         public Clock()
         {
             AlarmItems = new List<TimeOnly>();
-            ClockTime = new TimeOnly(23, 33, 33);
+            ClockTime = new TimeOnly(23, 33, 40);
 
             _timer = new Timer((state) => Tick(), null, 0, 1000);
         }
@@ -89,9 +90,6 @@ namespace HW03
         [ObservableProperty]
         public partial TimeSpan SelectedAlarmTime { get; set; } = TimeSpan.Zero;
 
-        [ObservableProperty]
-        public partial string AlarmText { get; set; } = "无事发生";
-
         public Clock DefaultClock => field;
 
         public TimeOnly DefaultClockTime => DefaultClock.ClockTime;
@@ -105,6 +103,7 @@ namespace HW03
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
             AlarmItems = new ObservableCollection<TimeOnly>();
+            DefaultClock.AddAlarm(new TimeOnly(23, 34, 00));
         }
 
         [RelayCommand]
@@ -135,9 +134,20 @@ namespace HW03
 
         private void OnAlarmRaised(object? sender, EventArgs e)
         {
-            _dispatcherQueue.TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(async () =>
             {
-                AlarmText = "QAQ";
+                ContentDialog dialog = new ContentDialog
+                {
+                    Title = "Alarm",
+                    Content = "起きて",
+                    CloseButtonText = "OK"
+                };
+
+
+                // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+                dialog.XamlRoot = ((Application.Current as App)?.m_window as MainWindow)?.Content.XamlRoot;
+
+                var result = await dialog.ShowAsync();
             });
         }
 
@@ -150,7 +160,6 @@ namespace HW03
                 {
                     AlarmItems.Add(alarm);
                 }
-                //OnPropertyChanged(nameof(AlarmItems));
             });
         }
     }

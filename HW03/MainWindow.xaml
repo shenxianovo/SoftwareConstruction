@@ -14,25 +14,21 @@
             <local:ClockViewModel/>
         </Grid.DataContext>
         <Grid.Resources>
-            <StackLayout x:Name="VerticalStackLayout" Orientation="Vertical" Spacing="8"/>
             <local:ClockFormatter x:Key="ClockFormatter"/>
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*" MinWidth="300"/>
         </Grid.ColumnDefinitions>
-
+        
         <!-- 数字时钟与校准 -->
         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock HorizontalAlignment="Center"
                        Text="{Binding DefaultClockTime, Converter={StaticResource ClockFormatter}}"
                        FontSize="40"/>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Calibrate" Command="{Binding CalibrateCommand}"/>
-                <TextBlock Text="{Binding AlarmText}"/>
-            </StackPanel>
+            <Button Content="Calibrate" Command="{Binding CalibrateCommand}" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!-- 分割线 -->
@@ -48,8 +44,15 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" BorderBrush="Gray" BorderThickness="0, 1, 0, 0" Margin="20, 0"/>
             <!-- Alarms 显示 -->
-            <ListView ItemsSource="{Binding AlarmItems}"/>
+            <ListView ItemsSource="{Binding AlarmItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontSize="20" Margin="20, 0, 0, 0"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
 
     </Grid>
