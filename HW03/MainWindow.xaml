@@ -9,20 +9,48 @@
     mc:Ignorable="d"
     Title="HW03">
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel.DataContext>
+    <Grid>
+        <Grid.DataContext>
             <local:ClockViewModel/>
-        </StackPanel.DataContext>
-        <StackPanel.Resources>
+        </Grid.DataContext>
+        <Grid.Resources>
+            <StackLayout x:Name="VerticalStackLayout" Orientation="Vertical" Spacing="8"/>
             <local:ClockFormatter x:Key="ClockFormatter"/>
-        </StackPanel.Resources>
+        </Grid.Resources>
 
-        <TextBlock Text="{Binding DefaultClockTime, Converter={StaticResource ClockFormatter}}"
-                   FontSize="40"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Calibrate" Command="{Binding CalibrateCommand}"/>
+        <!-- 数字时钟与校准 -->
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center"
+                       Text="{Binding DefaultClockTime, Converter={StaticResource ClockFormatter}}"
+                       FontSize="40"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Calibrate" Command="{Binding CalibrateCommand}"/>
+                <TextBlock Text="{Binding AlarmText}"/>
+            </StackPanel>
         </StackPanel>
 
-    </StackPanel>
+        <!-- 分割线 -->
+        <StackPanel Grid.Column="1" BorderBrush="Gray" BorderThickness="1, 0, 0, 0" Margin="0, 20"/>
+
+        <!-- AddAlarm 测试 -->
+        <StackPanel Grid.Column="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 20">
+                <TimePicker Time="{Binding SelectedAlarmTime, Mode=TwoWay}"/>
+                <Button Command="{Binding AddAlarmCommand}">
+                    <Button.Content>
+                        <FontIcon Glyph="&#xE710;"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <!-- Alarms 显示 -->
+            <ListView ItemsSource="{Binding AlarmItems}"/>
+        </StackPanel>
+
+    </Grid>
 </Window>
