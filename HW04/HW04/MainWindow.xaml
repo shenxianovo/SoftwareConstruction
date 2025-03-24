@@ -15,11 +15,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" VerticalAlignment="Top" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" Orientation="Horizontal" Height="80">
             <Button x:Name="PickFilesButton" Content="Open Files" Click="PickFilesButton_Click"/>
             <Button Content="Open Data Folder" Click="OpenDataFolderButton_Click"/>
             <Button Content="Save" Click="SaveFileButton_Click"/>
-            <TextBlock x:Name="PickFilesOutputTextBlock" TextWrapping="Wrap" Padding="20,5,0,0"/>
+            <ScrollView VerticalScrollBarVisibility="Visible">
+                <TextBlock x:Name="PickFilesOutputTextBlock" TextWrapping="Wrap" Padding="20,5,0,0"/>
+            </ScrollView>
         </StackPanel>
 
         <ScrollView Grid.Row="1"  HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Visible">
