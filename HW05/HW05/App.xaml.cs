@@ -71,15 +71,18 @@ namespace HW05
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = AppWindow.GetFromWindowId(windowId);
 
+            // disable Resize
             int scale = GetDpiForWindow(hWnd);
             int width = (int)(300 * 1.75);
-            int height = (int)(450 * 1.76);
+            int height = (int)(450 * 1.83);
 
             appWindow.Resize(new SizeInt32(width, height));
 
             var presenter = appWindow.Presenter as OverlappedPresenter;
             presenter!.IsResizable = false;
+            presenter!.IsMaximizable = false;
 
+            MainWindow.ExtendsContentIntoTitleBar = true;
             MainWindow.Activate();
         }
     }

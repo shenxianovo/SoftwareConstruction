@@ -24,37 +24,62 @@ namespace HW05
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        public MainViewModel ViewModel { get; }
+
         public MainWindow()
         {
             this.InitializeComponent();
             ViewModel = App.GetService<MainViewModel>();
 
+            ButtonSetup();
+        }
+
+        private void ButtonSetup()
+        {
             foreach (var element in ButtonGrid.Children)
             {
                 if (element is Button button)
                 {
                     button.Click += Button_Click;
+                    switch (button.Name)
+                    {
+                        case "Button_Divide":
+                            button.KeyboardAccelerators.Add(new KeyboardAccelerator
+                            {
+                                Key = (VirtualKey)191
+                            });
+                            break;
+                        case "Button_Enter":
+                            button.KeyboardAccelerators.Add(new KeyboardAccelerator
+                            {
+                                Key = (VirtualKey)187
+                            });
+                            break;
+                        case "Button_Add":
+                            button.KeyboardAccelerators.Add(new KeyboardAccelerator
+                            {
+                                Modifiers = VirtualKeyModifiers.Shift,
+                                Key = (VirtualKey)187
+                            });
+                            break;
+                        case "Button_Subtract":
+                            button.KeyboardAccelerators.Add(new KeyboardAccelerator
+                            {
+                                Key = (VirtualKey)189
+                            });
+                            break;
+                        case "Button_Decimal":
+                            button.KeyboardAccelerators.Add(new KeyboardAccelerator
+                            {
+                                Key = (VirtualKey)190
+                            });
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-        }
 
-        public MainViewModel ViewModel { get; }
-
-        private void KeyboradListener(object sender, KeyRoutedEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case VirtualKey.Enter:
-                    ViewModel.Text = "Enter key pressed";
-                    break;
-                case VirtualKey.Space:
-                    ViewModel.Text = "Space key pressed";
-                    break;
-                // Add more cases as needed
-                default:
-                    ViewModel.Text = $"Key {e.Key} pressed";
-                        break;
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -62,16 +87,27 @@ namespace HW05
             if (sender is not Button button)
                 return;
 
-            switch (button.Content.ToString())
+            button.Focus(FocusState.Keyboard);
+            var content = button.Content.ToString();
+
+            if (button.Name == "Button_Back")
             {
-                case "AC":
-                    ViewModel.Text = "0";
-                    break;
-                default:
-                    break;
+                ViewModel.RemoveDigit();
+                return;
             }
 
-            button.Focus(FocusState.Keyboard);
+            switch (content)
+            {
+                case "AC":
+                    ViewModel.Clear();
+                    break;
+                case "=":
+                    ViewModel.Calculate();
+                    break;
+                default:
+                    ViewModel.AppendDigit(content); // possible content: % Operator:(/ x - +) digit, and .
+                    break;
+            }
         }
     }
 }

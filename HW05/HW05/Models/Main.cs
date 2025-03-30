@@ -11,6 +11,14 @@ public class Main
 {
     private readonly ICalculator calculator;
 
+    public decimal? Calculate(string left, string right, string op)
+    {
+        decimal.TryParse(left, out var numLeft);
+        decimal.TryParse(right, out var numRight);
+
+        return calculator.Calculate(numLeft, numRight, op);
+    }
+
     public Main(ICalculator calculator)
     {
         this.calculator = calculator;

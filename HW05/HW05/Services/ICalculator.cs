@@ -8,5 +8,9 @@ namespace HW05.Services;
 
 public interface ICalculator
 {
-    public decimal Calculate(string expression);
+    public decimal Calculate(decimal left, decimal right, string op);
+    public decimal Add(decimal left, decimal right);
+    public decimal Subtract(decimal left, decimal right);
+    public decimal Multiply(decimal left, decimal right);
+    public decimal Divide(decimal left, decimal right);
 }

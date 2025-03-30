@@ -8,10 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="HW05">
-    
+
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Style="{StaticResource CalcTextBlockStyle}" Text="{x:Bind ViewModel.Text, Mode=OneWay}"/>
-        <Grid x:Name="ButtonGrid" Width="Auto" KeyDown="KeyboradListener">
+        <TextBlock Margin="15, 10, 0, 20" Text="CalQuLator"/>
+        <TextBlock Style="{StaticResource CalcTextBlockStyle}" Text="{x:Bind ViewModel.ExpressionText, Mode=OneWay}"
+                   FontSize="15" Height="20"/>
+        <TextBlock Style="{StaticResource CalcTextBlockStyle}" Text="{x:Bind ViewModel.NumberText, Mode=OneWay}"/>
+        <Grid x:Name="ButtonGrid" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>
@@ -38,7 +41,7 @@
                     <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button Grid.Row="0" Grid.Column="1" Foreground="{StaticResource SpecialButtonBrush}">
+            <Button x:Name="Button_Back" Grid.Row="0" Grid.Column="1" Foreground="{StaticResource SpecialButtonBrush}">
                 <FontIcon Glyph="&#xE750;"/>
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Back"/>
@@ -49,7 +52,7 @@
                     <KeyboardAccelerator Modifiers="Shift" Key="Number5"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button Grid.Row="0" Grid.Column="3" Content="÷" Foreground="{StaticResource SpecialButtonBrush}">
+            <Button x:Name="Button_Divide" Grid.Row="0" Grid.Column="3" Content="÷" Foreground="{StaticResource SpecialButtonBrush}">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Divide"/>
                 </Button.KeyboardAccelerators>
@@ -58,16 +61,19 @@
             <Button Grid.Row="1" Grid.Column="0" Content="7">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number7"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad7"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="1" Grid.Column="1" Content="8">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number8"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad8"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="1" Grid.Column="2" Content="9">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number9"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad9"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="1" Grid.Column="3" Content="×" Foreground="{StaticResource SpecialButtonBrush}">
@@ -80,19 +86,22 @@
             <Button Grid.Row="2" Grid.Column="0" Content="4">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number4"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad4"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="2" Grid.Column="1" Content="5">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number5"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad5"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="2" Grid.Column="2" Content="6">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number6"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad6"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button Grid.Row="2" Grid.Column="3" Content="-" Foreground="{StaticResource SpecialButtonBrush}">
+            <Button x:Name="Button_Subtract" Grid.Row="2" Grid.Column="3" Content="-" Foreground="{StaticResource SpecialButtonBrush}">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Subtract"/>
                 </Button.KeyboardAccelerators>
@@ -101,36 +110,42 @@
             <Button Grid.Row="3" Grid.Column="0" Content="1">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number1"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad1"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="3" Grid.Column="1" Content="2">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number2"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad2"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Grid.Row="3" Grid.Column="2" Content="3">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number3"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad3"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button Grid.Row="3" Grid.Column="3" Content="+" Foreground="{StaticResource SpecialButtonBrush}">
+            <Button x:Name="Button_Add" Grid.Row="3" Grid.Column="3" Content="+" Foreground="{StaticResource SpecialButtonBrush}">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Add"/>
                 </Button.KeyboardAccelerators>
             </Button>
 
-            <Button Grid.Row="4" Grid.Column="0" Content="QAQ"/>
+            <Button Grid.Row="4" Grid.Column="0">
+                <FontIcon Glyph="&#xE946;"/>
+            </Button>
             <Button Grid.Row="4" Grid.Column="1" Content="0">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Number0"/>
+                    <KeyboardAccelerator Modifiers="None" Key="NumberPad0"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button Grid.Row="4" Grid.Column="2" Content=".">
+            <Button x:Name="Button_Decimal" Grid.Row="4" Grid.Column="2" Content=".">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Decimal"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button Grid.Row="4" Grid.Column="3" Content="=" Background="{StaticResource SpecialButtonBrush}">
+            <Button x:Name="Button_Enter" Grid.Row="4" Grid.Column="3" Content="=" Background="{StaticResource SpecialButtonBrush}">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Enter"/>
                 </Button.KeyboardAccelerators>
