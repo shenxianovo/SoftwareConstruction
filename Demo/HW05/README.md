@@ -7,12 +7,16 @@
 ## 运行效果
 
 1. 实现了四则运算符，百分比，小数点和清零输入以及对应的键盘按键绑定
+
    ![alt text](HW05_od9HcGmX0I.gif)
 2. 实现了输入合法性检查（通过程序逻辑避免非法输入与运行时检查）
+
    ![alt text](HW05_VNq1C9oQ9B.gif)
 3. 实现了连续运算
+
    ![alt text](HW05_TDiwYGE0o5.gif)
 4. 实现了建议的 Info 界面
+
    ![alt text](image-3.png)
 
 ## 实现思路
