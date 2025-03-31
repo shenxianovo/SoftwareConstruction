@@ -154,9 +154,21 @@ public partial class MainViewModel : ObservableObject
 
     private void Stage()
     {
-        left = Calculate().ToString();
-        NumberText = left;
-        right = "";
+        try
+        {
+            left = Calculate().ToString();
+            NumberText = left;
+            right = "";
+        }
+        catch (Exception ex)
+        {
+            if (ex is DivideByZeroException)
+            {
+                Clear();
+                NumberText = "除数不能为零";
+                state = CalcState.INIT;
+            }
+        }
     }
 
     private void RemoveLastDigit(ref string target)
