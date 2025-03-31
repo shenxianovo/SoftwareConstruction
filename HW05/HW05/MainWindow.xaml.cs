@@ -79,7 +79,6 @@ namespace HW05
                     }
                 }
             }
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -96,18 +95,35 @@ namespace HW05
                 return;
             }
 
+            if (button.Name == "Button_Info")
+            {
+                ShowInfo();
+            }
+
             switch (content)
             {
                 case "AC":
                     ViewModel.Clear();
                     break;
-                case "=":
-                    ViewModel.Calculate();
-                    break;
                 default:
                     ViewModel.AppendDigit(content); // possible content: % Operator:(/ x - +) digit, and .
                     break;
             }
+        }
+
+        private async void ShowInfo()
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "About",
+                Content = "CalQulator Version 0.1\nAuthor: -QuQ-",
+                CloseButtonText = "OK"
+            };
+
+            // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+
+            var result = await dialog.ShowAsync();
         }
     }
 }

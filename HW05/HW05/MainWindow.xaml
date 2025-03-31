@@ -131,7 +131,7 @@
                 </Button.KeyboardAccelerators>
             </Button>
 
-            <Button Grid.Row="4" Grid.Column="0">
+            <Button x:Name="Button_Info" Grid.Row="4" Grid.Column="0">
                 <FontIcon Glyph="&#xE946;"/>
             </Button>
             <Button Grid.Row="4" Grid.Column="1" Content="0">

@@ -10,7 +10,44 @@
    ![alt text](HW05_od9HcGmX0I.gif)
 2. 实现了输入合法性检查（通过程序逻辑避免非法输入与运行时检查）
    ![alt text](HW05_VNq1C9oQ9B.gif)
+3. 实现了连续运算
+   ![alt text](HW05_TDiwYGE0o5.gif)
+4. 实现了建议的 Info 界面
+   ![alt text](image-3.png)
+
+## 实现思路
+
+1. 程序框架：MVVM + DI
+   - 使用 .NET 通用主机作为 DI 容器
+2. 程序逻辑：状态机
+   - 四种 `CalcState`
+     ![alt text](image-2.png)
+     ![alt text](image.png)
+3. 接口：`ICalculator`
+   ![alt text](image-1.png)
 
 ## 遇到的问题
 
 ### 1. 按键绑定
+
+xaml 中，绑定按键只需要设置 `KeyboardAccelerators` 属性就行
+
+``` xml
+<Button Grid.Row="4" Grid.Column="1" Content="0">
+      <Button.KeyboardAccelerators>
+         <KeyboardAccelerator Modifiers="None" Key="Number0"/>
+         <KeyboardAccelerator Modifiers="None" Key="NumberPad0"/>
+      </Button.KeyboardAccelerators>
+</Button>
+```
+
+但是有些键盘的 `VietualKey` 枚举值没定义，需要在 Code-Behind 里面用代码绑定
+
+``` cs
+// 键盘上的减号键
+button.KeyboardAccelerators.Add(new KeyboardAccelerator
+{
+   Key = (VirtualKey)191
+});
+break;
+```

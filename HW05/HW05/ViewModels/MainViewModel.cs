@@ -10,6 +10,11 @@ namespace HW05;
 
 public partial class MainViewModel : ObservableObject
 {
+    private string left = "0";
+    private string op = "";
+    private string right = "0";
+
+    private CalcState state = CalcState.INIT;
 
     [ObservableProperty]
     public partial string ExpressionText { get; set; }
@@ -17,137 +22,149 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public partial string NumberText { get; set; }
 
-    [ObservableProperty]
-    public partial string Left { get; set; } = "";
-    [ObservableProperty]
-    public partial string Op { get; set; } = "";
-    [ObservableProperty]
-    public partial string Right { get; set; } = "";
-
     public Main Model { get; }
 
-    private bool isLeftFinished = false;
-
-    private bool isCalcFinished = false;
-
-    public void Clear()
+    private enum CalcState
     {
-        ClearText();
-        ClearNumber();
-    }
-
-    private void ClearText() => ExpressionText = NumberText = "";
-    private void ClearNumber() => Left = Right = Op = "";
-
-    public void InputNumber(string content)
-    {
-        if (!isLeftFinished)
-        {
-            if (Left == "0" && content != ".") Left = content;
-            else if (content == "%")
-            {
-                decimal.TryParse(Left, out var n);
-                Left = (n / 100).ToString();
-            }
-            else Left += content;
-
-            NumberText = Left;
-        }
-        else
-        {
-            if (Right == "0" && content != ".") Right = content;
-            else if (content == "%")
-            {
-                decimal.TryParse(Right, out var n);
-                Right = (n / 100).ToString();
-            }
-            else Right += content;
-
-            NumberText = Right;
-        }
-    }
-    public void InputOp(string content)
-    {
-        Op = content;
-
-        ExpressionText = Left + Op;
-    }
-
-    public void Calculate()
-    {
-        try
-        {
-            isCalcFinished = true;
-            isLeftFinished = false;
-
-            ClearText();
-
-            ExpressionText = Left + Op + Right + "=";
-            var result = Model.Calculate(Left, Right, Op).ToString();
-
-            ClearNumber();
-
-            NumberText = result;
-        }
-        catch(Exception ex)
-        {
-            if (ex is DivideByZeroException)
-                NumberText = "除数不能为零";
-
-            ClearNumber();
-        }
-    }
-
-    private bool IsOperator(string content) => content == "+" || content == "-" || content == "×" || content == "÷";
-
-    private bool IsNumber(string content) => int.TryParse(content, out var num) || content == "." || content == "%";
-
-    public void AppendDigit(string content)
-    {
-        if (isCalcFinished)
-        {
-            ExpressionText = "";
-            isCalcFinished = false;
-        }
-
-        if (IsNumber(content))
-        {
-            InputNumber(content);
-            return;
-        }
-
-        if (IsOperator(content) && Left.Length > 0)
-        {
-            isLeftFinished = true;
-            InputOp(content);
-            return;
-        }
-    }
-
-    public void RemoveDigit()
-    {
-        if (!isLeftFinished)
-        {
-            if (Left.Length > 1)
-                Left = Left.Substring(0, Left.Length - 1);
-            else
-                Left = "0";
-
-            NumberText = Left;
-        }
-        else if (isLeftFinished)
-        {
-            if (Right.Length > 1)
-                Right = Right.Substring(0, Right.Length - 1);
-            else
-                Right = "0";
-
-            NumberText = Right;
-        }
+        INIT,
+        LEFT,
+        OP,
+        RIGHT
     }
 
     public MainViewModel(Main model)
     {
         Model = model;
+    }
+
+    public void Clear()
+    {
+        ClearText();
+        ClearNumber();
+        state = CalcState.INIT;
+    }
+
+    public void AppendDigit(string content)
+    {
+        switch (state)
+        {
+            case CalcState.INIT:
+            case CalcState.LEFT:
+                if (IsNumber(content))
+                {
+                    AppendNumber(content, ref left);
+                    state = CalcState.LEFT;
+                }
+                else if (IsOperator(content) && left.Length > 0)
+                {
+                    AppendOperator(content);
+                    state = CalcState.OP;
+                }
+                else if (content == "=")
+                {
+                    AppendOperator(content);
+                    state = CalcState.INIT;
+                }
+                break;
+
+            case CalcState.OP:
+                if (IsNumber(content))
+                {
+                    AppendNumber(content, ref right);
+                    state = CalcState.RIGHT;
+                }
+                else if (IsOperator(content))
+                {
+                    AppendOperator(content);
+                }
+                break;
+
+            case CalcState.RIGHT:
+                if (IsNumber(content))
+                {
+                    AppendNumber(content, ref right);
+                }
+                else if (IsOperator(content))
+                {
+                    Stage();
+                    op = content;
+                    ExpressionText = left + op;
+                    state = CalcState.OP;
+                }
+                else if (content == "=")
+                {
+                    ExpressionText = left + op + right + "=";
+                    Stage();
+                    state = CalcState.INIT;
+                }
+                break;
+        }
+    }
+
+    public void RemoveDigit()
+    {
+        switch (state)
+        {
+            case CalcState.LEFT:
+                RemoveLastDigit(ref left);
+                break;
+
+            case CalcState.RIGHT:
+                RemoveLastDigit(ref right);
+                break;
+        }
+    }
+
+    private void ClearText() => ExpressionText = NumberText = "";
+    private void ClearNumber() => left = right = op = "";
+
+    private bool IsNumber(string content) => decimal.TryParse(content, out _) || content == "." || content == "%";
+    private bool IsOperator(string content) => content == "+" || content == "-" || content == "×" || content == "÷";
+
+    private void AppendNumber(string content, ref string target)
+    {
+        if (target.Contains(".") && content == ".")
+            return;
+
+        if (content == "%")
+        {
+            decimal.TryParse(target, out var result);
+            target = (result / 100).ToString();
+            NumberText = target;
+            return;
+        }
+
+        if (target == "0" && content != ".")
+            target = content;
+        else
+            target += content;
+
+        NumberText = target;
+    }
+    private void AppendOperator(string content)
+    {
+        op = content;
+        ExpressionText = left + op;
+    }
+
+    private decimal Calculate()
+    {
+        return Model.Calculate(left, right, op);
+    }
+
+    private void Stage()
+    {
+        left = Calculate().ToString();
+        NumberText = left;
+        right = "";
+    }
+
+    private void RemoveLastDigit(ref string target)
+    {
+        if (target.Length > 1)
+            target = target.Substring(0, target.Length - 1);
+        else
+            target = "0";
+        NumberText = target;
     }
 }
