@@ -9,6 +9,10 @@
     mc:Ignorable="d"
     Title="HW05">
 
+    <Window.SystemBackdrop>
+        <MicaBackdrop/>
+    </Window.SystemBackdrop>
+    
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock Margin="15, 10, 0, 20" Text="CalQuLator"/>
         <TextBlock Style="{StaticResource CalcTextBlockStyle}" Text="{x:Bind ViewModel.ExpressionText, Mode=OneWay}"

@@ -31,7 +31,18 @@ namespace HW05
             this.InitializeComponent();
             ViewModel = App.GetService<MainViewModel>();
 
+            SetMicaBackdrop();
             ButtonSetup();
+        }
+
+        private void SetMicaBackdrop()
+        {
+            if (Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
+            {
+                MicaBackdrop micaBackdrop = new MicaBackdrop();
+                micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt;
+                this.SystemBackdrop = micaBackdrop;
+            }
         }
 
         private void ButtonSetup()
