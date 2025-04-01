@@ -45,7 +45,7 @@ xaml 中，绑定按键只需要设置 `KeyboardAccelerators` 属性就行
 </Button>
 ```
 
-但是有些键盘的 `VietualKey` 枚举值没定义，需要在 Code-Behind 里面用代码绑定
+但是有些键盘的 `VirtualKey` 枚举值没定义，需要在 Code-Behind 里面用代码绑定
 
 ``` cs
 // 键盘上的减号键
