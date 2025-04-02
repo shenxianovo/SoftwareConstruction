@@ -49,6 +49,18 @@ public partial class MainViewModel : ObservableObject
         switch (state)
         {
             case CalcState.INIT:
+                if (IsNumber(content))
+                {
+                    Clear();
+                    AppendNumber(content, ref left);
+                    state = CalcState.LEFT;
+                }
+                else if (IsOperator(content))
+                {
+                    AppendOperator(content);
+                    state = CalcState.OP;
+                }
+                break;
             case CalcState.LEFT:
                 if (IsNumber(content))
                 {
@@ -119,7 +131,7 @@ public partial class MainViewModel : ObservableObject
     private void ClearNumber() => left = right = op = "";
 
     private bool IsNumber(string content) => decimal.TryParse(content, out _) || content == "." || content == "%";
-    private bool IsOperator(string content) => content == "+" || content == "-" || content == "×" || content == "÷";
+    private bool IsOperator(string content) => content is "+" or "-" or "×" or "÷";
 
     private void AppendNumber(string content, ref string target)
     {
@@ -134,10 +146,18 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        if (target == "0" && content != ".")
-            target = content;
-        else
-            target += content;
+        switch (target)
+        {
+            case "0" when content != ".":
+                target = content;
+                break;
+            case "" when content == ".":
+                target = "0.";
+                break;
+            default:
+                target += content;
+                break;
+        }
 
         NumberText = target;
     }
@@ -166,7 +186,6 @@ public partial class MainViewModel : ObservableObject
             {
                 Clear();
                 NumberText = "除数不能为零";
-                state = CalcState.INIT;
             }
         }
     }
