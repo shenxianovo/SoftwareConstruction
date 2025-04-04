@@ -68,20 +68,13 @@ xaml 中，设置 `SystemBackdrop`
 
 Mica 材质简单说就是将你桌面背景模糊后应用到应用背景。所以应用的背景可以和你桌面背景保持一致
 
-MicaAlt 会让桌面对应用的着色能力更强，但 需要在 Code-Behind 设置
+MicaAlt 会让桌面对应用的着色能力更强
 
-``` cs
-private void SetMicaBackdrop()
-{
-   if (Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
-   {
-         MicaBackdrop micaBackdrop = new MicaBackdrop();
-         micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt;
-         this.SystemBackdrop = micaBackdrop;
-   }
-}
+``` xml
+<Window.SystemBackdrop>
+   <MicaBackdrop Kind="BaseAlt"/>
+</Window.SystemBackdrop>
 ```
-
 Mica Alt效果：（我写完作业之后逛社区看到了，突然想起来可以加一个（）所以这个文档前面还是 Default Backdrop 的效果 ~~懒得重新录了~~）
 
 ![alt text](image-4.png)

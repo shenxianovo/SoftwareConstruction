@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "HW06 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "HW06 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
