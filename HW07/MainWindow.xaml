@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="HW07.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HW07"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="HW07">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Margin="10">
+            <TextBox x:Name="KeyWordTextBox" PlaceholderText="Search Here~" MinWidth="250"/>
+            <Button x:Name="SearchButton" Click="SearchButton_Click">
+                <FontIcon Glyph="&#xE71E;"/>
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Enter"/>
+                </Button.KeyboardAccelerators>
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1" x:Name="ResultGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Results in Bing" HorizontalAlignment="Center" Margin="10"/>
+                <TextBox Grid.Row="1" x:Name="BingResultTextBox" TextWrapping="Wrap" />
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Results in DuckDuckGo" HorizontalAlignment="Center" Margin="10"/>
+                <TextBox Grid.Row="1" x:Name="DuckDuckGoResultTextBox" TextWrapping="Wrap"/>
+            </Grid>
+        </Grid>
+    </Grid>
+    
+</Window>
