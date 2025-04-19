@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HW08.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HW08.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource LayerOnMicaBaseAltFillColorTransparent}">
+
+    <Grid>
+        <Grid Canvas.ZIndex="1"
+              Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+              VerticalAlignment="Top"
+              Margin="50 0 0 0">
+            <FontIcon Glyph="&#xE785;" HorizontalAlignment="Left"/>
+            <TextBlock Text="背单词..." VerticalAlignment="Center" Margin="28 0 0 0"/>
+        </Grid>
+        <NavigationView x:Name="NavigationViewControl">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Content="Home Page" />
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame"/>
+        </NavigationView>
+    </Grid>
+</Page>
