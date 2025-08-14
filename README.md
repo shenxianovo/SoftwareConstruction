@@ -45,6 +45,8 @@ WinUI3的资料少得可怜。我都不知道我是怎么摸过来的...
   - WinUI 社区工具包。里面有一些社区制作的工具包，控件，库的介绍。
 - [Windows App Community](https://discord.gg/TwtWSsTy)
   - 一个 Windows App 的 Discord 社区。里面有其他开发者的项目可以作参考。~~也可以水群~~
+- [WinUI3仓库](https://github.com/microsoft/microsoft-ui-xaml)
+  - 遇到Bug可以提，[说不定就修了](https://github.com/microsoft/microsoft-ui-xaml/issues/10524)呢（）
 
 #### 杂项
 - [十月的寒流](https://space.bilibili.com/600592 )
